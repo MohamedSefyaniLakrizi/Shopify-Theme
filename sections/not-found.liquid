@@ -1,0 +1,52 @@
+<div>
+    <h1>404</h1>
+    <h2> {{ section.settings.not_found_text }} </h2>
+</div>
+
+
+
+
+{% schema %}
+{
+    "name": "Body",
+    "settings": [
+        {
+            "type": "text",
+            "id": "not_found_text",
+            "label": "Not Found Text",
+            "default": "Page not Found"
+        }
+    ],
+    "presets": [
+        {
+            "name": "not_found_text",
+            "settings": {
+                "not_found_text": "Check out this product"
+            }
+        }
+    ]
+}
+{% endschema %}
+
+
+{% comment %}    
+
+<style>
+    div {
+        text-align: center;
+        margin: 50px auto;
+    }
+    h1 {
+        font-size: 100px;
+        font-weight: bold;
+        margin: 0;
+    }
+    h2 {
+        font-size: 30px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+</style>
+
+{% endcomment %}

@@ -1,0 +1,775 @@
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+        },
+        {
+            "type": "range",
+            "id": "image_size",
+            "min": 100,
+            "max": 300,
+            "step": 10,
+            "unit": "px",
+            "label": "Image size",
+            "default": 100
+        },
+        {
+            "type": "header",
+            "content": "Colors"
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background Color",
+            "default": "#1E3A8A"
+        },
+        {
+            "type": "color",
+            "id": "first_color",
+            "label": "First Navigation Color",
+            "default": "#1D4ED8"
+        },
+        {
+            "type": "color",
+            "id": "rest_color",
+            "label": "Rest Navigation Color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "on_hover_color",
+            "label": "On hover Navigation Color",
+            "default": "#1D4ED8"
+        },
+        {
+            "type": "color",
+            "id": "sandwich_border_color",
+            "label": "Sandwich Border Color",
+            "default": "#374151"
+        },
+        {
+            "type": "header",
+            "content": "Suggested Searches"
+        },
+        {
+            "type": "text",
+            "id": "suggested_search_1",
+            "label": "Suggested Search 1",
+            "default": "Suggested Search 1"
+        },
+        {
+            "type": "text",
+            "id": "suggested_search_2",
+            "label": "Suggested Search 2",
+            "default": "Suggested Search 2"
+        },
+        {
+            "type": "text",
+            "id": "suggested_search_3",
+            "label": "Suggested Search 3",
+            "default": "Suggested Search 3"
+        },
+        {
+            "type": "text",
+            "id": "suggested_search_4",
+            "label": "Suggested Search 4",
+            "default": "Suggested Search 4"
+        },
+        {
+            "type": "text",
+            "id": "suggested_search_5",
+            "label": "Suggested Search 5",
+            "default": "Suggested Search 5"
+        },
+        {
+            "type": "text",
+            "id": "suggested_search_6",
+            "label": "Suggested Search 6",
+            "default": "Suggested Search 6"
+        },
+        {
+            "type": "text",
+            "id": "suggested_search_7",
+            "label": "Suggested Search 7",
+            "default": "Suggested Search 7"
+        }       
+    ]
+}
+{% endschema %}
+
+{% assign section = section.settings %}
+
+<header id="navbar-default" class=" min-h-[12vh] bg-header-small fixed top-0 w-[100vw] lg:min-h-[6vh] bg-navbar-initial flex flex-row justify-between items-center z-50">
+    <div class="w-[30vw] lg:hidden flex justify-start">
+        <button id="hamburger-menu" class="pl-4">
+            <svg id="hamburger-icon" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 11.4477 1.44772 11 2 11H22C22.5523 11 23 11.4477 23 12C23 12.5523 22.5523 13 22 13H2C1.44772 13 1 12.5523 1 12Z"></path> <path d="M1 4C1 3.44772 1.44772 3 2 3H22C22.5523 3 23 3.44772 23 4C23 4.55228 22.5523 5 22 5H2C1.44772 5 1 4.55228 1 4Z"></path> <path d="M1 20C1 19.4477 1.44772 19 2 19H22C22.5523 19 23 19.4477 23 20C23 20.5523 22.5523 21 22 21H2C1.44772 21 1 20.5523 1 20Z""></path> </g></svg>
+            <svg id="close-icon-menu" class="hidden relative right-9 "viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9393 12L6.9696 15.9697L8.03026 17.0304L12 13.0607L15.9697 17.0304L17.0304 15.9697L13.0607 12L17.0303 8.03039L15.9696 6.96973L12 10.9393L8.03038 6.96973L6.96972 8.03039L10.9393 12Z"></path> </g></svg>
+        </button>
+    </div>
+    <div id="navigation" class="h-[88vh] w-screen bg-white fixed top-[12vh] flex-col flex justify-between lg:h-auto lg:top-0 lg:bg-transparent lg:block lg:flex-row lg:gap-0 lg:relative lg:w-[40vw] lg:pl-3">
+    <ul class="h-auto w-screen bg-white flex-col flex lg:h-max lg:top-0 lg:bg-transparent lg:block lg:flex-row lg:gap-0 lg:relative lg:w-[40vw] lg:pl-3">
+        {% for link in linklists.main-menu.links %}
+            <li class="{% if forloop.first %} mt-5 {% endif %} {% if forloop.last %} border-b-[1px] {% endif %} h-[7vh] flex items-center bg-white border-t-[1px] border-gray-200 lg:border-0 lg:mt-0 lg:h-[64px] lg:w-auto lg:bg-transparent lg:relative lg:list-none lg:float-left">
+                {% if link.links.size > 0  %}  
+                    <summary 
+                        class="{% if link == linklists.main-menu.links[0] %} first-element-color {% else %} rest-element-color {% endif %}
+                                flex items-center tracking-wider font-semibold text-lg hover:bg-gray-200 w-full h-full pl-10  drop-shadow-xl on-hover-nav-color lg:h-max lg:font-bold lg:ml-0 xl:ml-3 lg:text-sm xl:text-base lg:px-3 lg:py-5 lg:flex lg:justify-between"
+                    >{{link.title}}
+                        <b class="hidden lg:flex lg:static lg:right-0 lg:text-[8px] lg:ml-[5px]">▼</b>
+                        <svg class="absolute right-5 lg:hidden" fill="#000000" viewBox="0 0 24 24" id="right-arrow" xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M3,12H21m-3,3,3-3L18,9" style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+                    </summary>
+                    {% assign parent_title = link.title %}
+                    <ul id="inside-nav" class="inside-ul absolute h-screen w-screen top-0 bg-white z-10 lg:hidden lg:h-auto lg:absolute lg:left-0 lg:w-[200px] lg:bg-white lg:rounded-xl lg:top-[64px]">
+                        {% for link in link.links %}
+                            {% if forloop.first %}
+                                <li class="mt-5 h-[5vh] flex flex-row  gap-20 items-center border-gray-200 bg-gray-100 border-t-[1px] lg:hidden">
+                                    <summary
+                                        class="go-back w-full h-full font-semibold flex items-center tracking-wider"
+                                    ><svg class="ml-10 mr-3 back-arrow" fill="#000000" viewBox="0 0 24 24" id="left-arrow" xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M21,12H3M6,9,3,12l3,3" style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+                                    {{parent_title}}
+                                    </summary>
+                                </li>
+                            {% endif %}
+                            <li class="{% if forloop.last %} border-b-[1px] {% endif %} h-[7vh] flex items-center border-gray-200 bg-white border-t-[1px]  lg:mt-0 lg:h-[50px] {% if forloop.first %} lg:rounded-t-xl {% endif %} {% if forloop.last %} lg:rounded-b-xl {% endif %} lg:opacity-95">
+                                {% if link.links.size > 0  %}
+                                    <summary href="{{link.url}}" class="w-full h-full tracking-wider font-semibold text-lg flex items-center hover:bg-gray-200  pl-10 lg:absolute lg:w-full lg:h-[50px] lg:border-gray-200 lg:border-[1px] lg:text-base lg:pl-6 lg:py-1 lg:flex lg:font-bold lg:text-black lg:justify-between {% if forloop.first %} lg:rounded-t-xl {% endif %} {% if forloop.last %} lg:rounded-b-xl {% endif %}"> {{link.title}} 
+                                    <b class="hidden lg:block lg:text-[8px] lg:mt-2 lg:absolute lg:right-3">➤</b>
+                                    <svg class="absolute right-5 lg:hidden" fill="#000000" viewBox="0 0 24 24" id="right-arrow" xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M3,12H21m-3,3,3-3L18,9" style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+                                    </summary>
+                                    {% assign parent_title2 = link.title %}
+                                    <ul id="inside-nav" class="3rd-ul-child inside-ul fixed h-screen w-screen top-0 bg-white z-20 lg:hidden lg:left-[200px] lg:top-[25px] lg:relative lg:w-[200px] lg:h-auto lg:bg-white lg:rounded-xl">
+                                        {% for link in link.links %}
+                                            {% if forloop.first %}
+                                                <li class="mt-5 h-[5vh] flex flex-row  gap-20 items-center border-gray-200 bg-gray-100 border-t-[1px] lg:hidden">
+                                                    <summary
+                                                        class="go-back w-full h-full flex items-center tracking-wider font-semibold"
+                                                    ><svg class="ml-10 mr-3 back-arrow" fill="#000000" viewBox="0 0 24 24" id="left-arrow" xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M21,12H3M6,9,3,12l3,3" style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+                                                    {{parent_title2}}
+                                                    </summary>
+                                                </li>
+                                            {% endif %}
+                                            <li class="{% if forloop.last %} border-b-[1px] {% endif %} h-[7vh] flex items-center border-gray-200 bg-white border-t-[1px] lg:flex lg:items-center lg:border-0 {% if forloop.first %} lg:rounded-t-xl {% endif %} {% if forloop.last %} lg:rounded-b-xl {% endif %}  lg:border-[1px] lg:w-[200px] lg:h-[50px] lg:hover:bg-gray-200 lg:opacity-95 ">
+                                                <a href="{{link.url}}" class="w-full h-full tracking-wider font-semibold text-lg pl-10 flex items-center lg:items-center lg:ml-0 lg:absolute lg:w-full lg:h-[50px] lg:border-gray-200 lg:border-[1px] lg:text-base lg:pl-6 lg:py-1 lg:flex lg:font-bold lg:text-black lg:justify-between {% if forloop.first %} lg:rounded-t-xl {% endif %} {% if forloop.last %} lg:rounded-b-xl {% endif %}"> {{link.title}} </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                {% if link.links.size == 0  %}
+                                    <a href="{{ link.url }}" 
+                                        class="w-full h-full tracking-wider font-semibold text-lg lg:drop-shadow-xl flex items-center hover:bg-gray-200 pl-10 lg:text-base lg:w-full lg:h-[50px] lg:pl-6 lg:py-1 lg:flex lg:font-bold lg:text-black lg:border-gray-200 lg:border-[1px] {% if forloop.first %} lg:rounded-t-xl {% endif %} {% if forloop.last %} lg:rounded-b-xl {% endif %}"
+                                    >{{link.title}}</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if link.links.size == 0  %}
+                    <a href="{{ link.url }}" 
+                        class="{% if link == linklists.main-menu.links[0] %} first-element-color {% else %} rest-element-color {% endif %}
+                                  flex items-center tracking-wider font-semibold hover:bg-gray-200 w-full h-full pl-10 text-lg lg:drop-shadow-xl on-hover-nav-color lg:text-sm xl:text-base lg:h-auto lg:font-bold lg:ml-0 xl:ml-3 lg:px-3 lg:py-5 lg:flex lg:justify-between"
+                    >{{link.title}}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+        <div class="relative pt-10 pl-10 pb-10 mb-28 bg-gray-100 lg:hidden">
+            <h2 class="text-xl mb-2">Country/region</h2>
+            {% if localization.available_countries.size > 1 %}
+            <localization-form>
+                {% form 'localization' %}
+                <div class="disclosure">
+                    <button type="button" class="disclosure__button flex flex-row items-center" aria-expanded="false" aria-controls="CountryList">
+                    {{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})
+
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret ml-1 w-3 h-3" viewBox="0 0 10 6">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                    </svg>
+                    </button>
+
+                    <ul id="CountryList" role="list" class="disclosure__list absolute h-[165px] bg-white -top-24 overflow-auto shadow-sm rounded-md" hidden>
+                    {% for country in localization.available_countries %}
+                        <li class="disclosure__item p-1 border-b-[1px] border-gray-100" tabindex="-1">
+                        <a class="font-normal" href="#"{% if country.iso_code == localization.country.iso_code %} aria-current="true"{% endif %} data-value="{{ country.iso_code }}">
+                            {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+                        </a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+
+                    <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+                </div>
+                {% endform %}
+            </localization-form>
+{% endif %}
+
+            <div class="flex flex-row gap-7 mt-5">
+                <a href="{{settings.instagram_link}}">
+                    <svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>instagram [#167]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-340.000000, -7439.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M289.869652,7279.12273 C288.241769,7279.19618 286.830805,7279.5942 285.691486,7280.72871 C284.548187,7281.86918 284.155147,7283.28558 284.081514,7284.89653 C284.035742,7285.90201 283.768077,7293.49818 284.544207,7295.49028 C285.067597,7296.83422 286.098457,7297.86749 287.454694,7298.39256 C288.087538,7298.63872 288.809936,7298.80547 289.869652,7298.85411 C298.730467,7299.25511 302.015089,7299.03674 303.400182,7295.49028 C303.645956,7294.859 303.815113,7294.1374 303.86188,7293.08031 C304.26686,7284.19677 303.796207,7282.27117 302.251908,7280.72871 C301.027016,7279.50685 299.5862,7278.67508 289.869652,7279.12273 M289.951245,7297.06748 C288.981083,7297.0238 288.454707,7296.86201 288.103459,7296.72603 C287.219865,7296.3826 286.556174,7295.72155 286.214876,7294.84312 C285.623823,7293.32944 285.819846,7286.14023 285.872583,7284.97693 C285.924325,7283.83745 286.155174,7282.79624 286.959165,7281.99226 C287.954203,7280.99968 289.239792,7280.51332 297.993144,7280.90837 C299.135448,7280.95998 300.179243,7281.19026 300.985224,7281.99226 C301.980262,7282.98483 302.473801,7284.28014 302.071806,7292.99991 C302.028024,7293.96767 301.865833,7294.49274 301.729513,7294.84312 C300.829003,7297.15085 298.757333,7297.47145 289.951245,7297.06748 M298.089663,7283.68956 C298.089663,7284.34665 298.623998,7284.88065 299.283709,7284.88065 C299.943419,7284.88065 300.47875,7284.34665 300.47875,7283.68956 C300.47875,7283.03248 299.943419,7282.49847 299.283709,7282.49847 C298.623998,7282.49847 298.089663,7283.03248 298.089663,7283.68956 M288.862673,7288.98792 C288.862673,7291.80286 291.150266,7294.08479 293.972194,7294.08479 C296.794123,7294.08479 299.081716,7291.80286 299.081716,7288.98792 C299.081716,7286.17298 296.794123,7283.89205 293.972194,7283.89205 C291.150266,7283.89205 288.862673,7286.17298 288.862673,7288.98792 M290.655732,7288.98792 C290.655732,7287.16159 292.140329,7285.67967 293.972194,7285.67967 C295.80406,7285.67967 297.288657,7287.16159 297.288657,7288.98792 C297.288657,7290.81525 295.80406,7292.29716 293.972194,7292.29716 C292.140329,7292.29716 290.655732,7290.81525 290.655732,7288.98792" id="instagram-[#167]"> </path> </g> </g> </g> </g></svg>
+                </a>
+                <a href="{{settings.facebook_link}}">
+                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000" class="bi bi-facebook"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path> </g></svg>
+                </a>
+                <a href="{{settings.tiktok_link}}">
+                    <svg fill="#000000" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>tiktok</title> <path d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z"></path> </g></svg>
+                </a>
+                <a href="{{settings.pinterest_link}}">
+                    <svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>pinterest [#180]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-220.000000, -7399.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M173.876,7239 C168.399,7239 164,7243.43481 164,7248.95866 C164,7253.05869 166.407,7256.48916 169.893,7258.07936 C169.893,7256.21186 169.88,7256.45286 171.303,7250.38046 C170.521,7248.80236 171.129,7246.19673 172.88,7246.19673 C175.31,7246.19673 173.659,7249.79964 173.378,7251.2174 C173.129,7252.30544 173.959,7253.14238 174.955,7253.14238 C176.864,7253.14238 178.108,7250.71524 178.108,7247.87063 C178.108,7245.69456 176.615,7244.10437 174.042,7244.10437 C169.467,7244.10437 168.307,7249.19966 169.893,7250.79893 C170.292,7251.40294 169.893,7251.43118 169.893,7252.22174 C169.616,7253.05768 167.403,7251.84259 167.403,7248.70757 C167.403,7245.86195 169.727,7242.51518 174.457,7242.51518 C178.191,7242.51518 180.681,7245.27609 180.681,7248.2054 C180.681,7252.13805 178.523,7254.98366 175.37,7254.98366 C174.291,7254.98366 173.295,7254.3978 172.963,7253.72824 C172.36,7256.07371 172.238,7257.26258 171.303,7258.58153 C172.216,7258.83261 173.129,7259 174.125,7259 C179.602,7259 184,7254.56519 184,7249.04235 C183.752,7243.43481 179.353,7239 173.876,7239" id="pinterest-[#180]"> </path> </g> </g> </g> </g></svg>
+                </a>
+            </div> 
+        </div>  
+    </div>
+    <a href="/">
+        <img src="{{section.logo | image_url}}" width="{{section.image_size}}" height="{{section.image_size}}" alt="Logo" />
+    </a>
+    <ul class="relative flex flex-row w-[30vw] lg:w-[40vw] justify-end">
+        <li class="relative py-5">
+            <a href="#" class="" id="search-button">
+                <svg id="open-search-mobile" class="lg:block" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50" fill="#ffffff">
+                <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z"></path>
+                </svg>
+                <svg id="close-search-mobile" class="relative hidden lg:hidden" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="#ffffff"></path> </g></svg>
+            </a>
+        </li>
+        <li class="relative pr-4 pl-6 lg:pl-7 lg:pr-6 py-5 ">
+                    {% if cart.empty? %}
+                    <a href="/cart" class=" ">
+                        <svg fill="#ffffff" height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 483.1 483.1" xml:space="preserve" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M434.55,418.7l-27.8-313.3c-0.5-6.2-5.7-10.9-12-10.9h-58.6c-0.1-52.1-42.5-94.5-94.6-94.5s-94.5,42.4-94.6,94.5h-58.6 c-6.2,0-11.4,4.7-12,10.9l-27.8,313.3c0,0.4,0,0.7,0,1.1c0,34.9,32.1,63.3,71.5,63.3h243c39.4,0,71.5-28.4,71.5-63.3 C434.55,419.4,434.55,419.1,434.55,418.7z M241.55,24c38.9,0,70.5,31.6,70.6,70.5h-141.2C171.05,55.6,202.65,24,241.55,24z M363.05,459h-243c-26,0-47.2-17.3-47.5-38.8l26.8-301.7h47.6v42.1c0,6.6,5.4,12,12,12s12-5.4,12-12v-42.1h141.2v42.1 c0,6.6,5.4,12,12,12s12-5.4,12-12v-42.1h47.6l26.8,301.8C410.25,441.7,389.05,459,363.05,459z"></path> </g> </g></svg>
+                    </a>            
+                    {% else %}
+                    <a href="/cart" class=" ">
+                        <svg fill="#ffffff" height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489.9 489.9" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M414.25,109.4c-0.8-8.8-8.2-15.6-17.1-15.6h-53.1c-2.8-52.2-46.1-93.8-99-93.8s-96.2,41.6-99,93.8h-53.1 c-8.9,0-16.3,6.8-17.1,15.6l-27.6,311c0,0.5-0.1,1-0.1,1.5c0,37.5,34.2,68,76.2,68h241.2c42,0,76.2-30.5,76.2-68 c0-0.5,0-1-0.1-1.5L414.25,109.4z M245.05,34.3c34,0,61.9,26.2,64.6,59.5h-129.2C183.15,60.5,211.05,34.3,245.05,34.3z M365.65,455.7h-241.2c-22.8,0-41.5-14.8-41.9-33.1l26.2-294.5h37.2v36.6c0,9.5,7.7,17.2,17.2,17.2s17.2-7.7,17.2-17.2v-36.6 h129.7v36.6c0,9.5,7.7,17.2,17.1,17.2c9.5,0,17.2-7.7,17.2-17.2v-36.6h37.2l26.2,294.5C407.15,440.9,388.55,455.7,365.65,455.7z"></path> <path d="M290.85,249.6l-66.6,66.6l-25-25c-6.7-6.7-17.6-6.7-24.3,0s-6.7,17.6,0,24.3l37.1,37.1c3.3,3.3,7.7,5,12.1,5 c4.4,0,8.8-1.7,12.1-5l78.7-78.7c6.7-6.7,6.7-17.6,0-24.3C308.45,242.9,297.55,242.9,290.85,249.6z"></path> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g></svg>        
+                    </a>
+        {% endif %}
+        </li>
+    </ul>
+</header>
+
+
+<div id="search-form" class="hidden fixed h-[8vh] top-[12vh] w-screen bg-white z-30 lg:fixed lg:top-0 lg:w-screen lg:h-screen lg:bg-slate-50 lg:z-50">
+    <div class="hidden lg:relative lg:h-28 lg:w-screen lg:flex lg:justify-end">
+        <button id="search-close">
+            <svg class="relative right-10 top-10" width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9393 12L6.9696 15.9697L8.03026 17.0304L12 13.0607L15.9697 17.0304L17.0304 15.9697L13.0607 12L17.0303 8.03039L15.9696 6.96973L12 10.9393L8.03038 6.96973L6.96972 8.03039L10.9393 12Z" fill="#000000"></path> </g></svg>
+        </button>
+    </div>
+    <div class=" h-full block align-middle lg:h-auto lg:pt-20 lg:pb-5">
+        <div class="absolute top-[30%] w-screen flex flex-row justify-center align-middle lg:w-auto lg:static border-bottom lg: lg:text-center lg:mx-96">
+            <form action="{{ routes.search_url }}" class="flex flex-row items-stretch justify-start align-middle space-x-4 lg:flex lg:flex-row lg:w-full lg:items-stretch lg:justify-start lg:space-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mobile-svg mt-[3px] lg:mt-0" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50" fill="#222222" class="mt-1">
+                    <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z"></path>
+                </svg>
+                <input type="text"
+                    id="search-mobile-input"
+                    autocomplete="off"
+                    placeholder="Search"
+                    name="q"
+                    value="{{ search.terms | escape }}"
+                    class="font-bold font-[Poppins] text-sm lg:w-full lg:bg-transparent lg:text-base lg:no-outline lg:font-bold lg:opacity-90 lg:outline-none"
+                >
+                <div class="ml-auto-i">
+                    <button type="submit">
+                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z" fill="#222222"></path> </g></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="hidden lg:max-w-4xl lg:p-8 lg:flex lg:justify-center">
+        <div class="ml-20 flex flex-col gap-7">
+            <h2 class="text-xs mb-1 text-gray-700">POPULAR SEARCHES</h2>
+            <a class="font-bold on-hover-nav-color" href="/search?q={{section.suggested_search_1}}">{{section.suggested_search_1}}</a>
+            <a class="font-bold on-hover-nav-color" href="/search?q={{section.suggested_search_2}}">{{section.suggested_search_2}}</a>
+            <a class="font-bold on-hover-nav-color" href="/search?q={{section.suggested_search_3}}">{{section.suggested_search_3}}</a>
+            <a class="font-bold on-hover-nav-color" href="/search?q={{section.suggested_search_4}}">{{section.suggested_search_4}}</a>
+            <a class="font-bold on-hover-nav-color" href="/search?q={{section.suggested_search_5}}">{{section.suggested_search_5}}</a>
+            <a class="font-bold on-hover-nav-color" href="/search?q={{section.suggested_search_6}}">{{section.suggested_search_6}}</a>
+            <a class="font-bold on-hover-nav-color" href="/search?q={{section.suggested_search_7}}">{{section.suggested_search_7}}</a>
+        </div>
+    </div>
+</div>
+
+<div class="h-[12vh]  {% if request.path == '/' %}lg:h-0{% else %}lg:h-[8vh]{% endif %}"></div>
+
+<style>
+a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+    .first-element-color {
+        color: {{ section.first_color}};
+    }
+    .rest-element-color {
+        color: {{ section.rest_color }};
+    }
+
+    .on-hover-nav-color:hover {
+        background-position: 0;
+    }
+    .on-hover-nav-color:hover::before {
+        width: 100%;
+    }
+    .on-hover-nav-color:hover {
+        background-image: linear-gradient(
+            to right,
+            {{ section.rest_color }},
+            {{ section.on_hover_color }} 50%,
+            {{ section.on_hover_color }} 50%
+        );
+        background-size: 200% 100%;
+        background-position: -100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s ease-in-out;
+    }
+    .bg-navbar-initial {
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.45) 70%, rgba(0,0,0,0) 100%);
+    transition: background-color 0.5s ease-in-out;
+    }
+
+    ul li:hover > ul{
+        display: block;
+        transition: all 1s ease-in-out;
+        transition-delay: 1s;
+    }
+
+    ul li ul li:hover > ul{
+        display: block;
+        transition: all 1s ease-in-out;
+        transition-delay: 1s;
+    }
+
+    .animation-search {
+    transform: translateX(-100%);
+    transition: transform 0.5s ease-in-out;
+    }
+
+    @keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+    }
+
+    @keyframes slideOutToRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+    }
+
+    .search-form-animation {
+    animation: slideInFromRight 0.5s forwards;
+    }
+
+    .search-form-animation-out {
+    animation: slideOutToRight 0.5s forwards;
+    }
+
+    textarea:focus, input:focus{
+    outline: none;
+    } 
+
+    a svg {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    a:hover svg {
+        fill: {{ section.on_hover_color }};
+        stroke: {{ section.on_hover_color }};
+        transition: all 0.2s ease-in-out;
+    }
+
+    button svg {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    button:hover svg:not(#hamburger-icon):not(#close-icon-menu){
+        fill: {{ section.on_hover_color }};
+        stroke: {{ section.on_hover_color }};
+        transition: all 0.2s ease-in-out;
+    }
+
+    .border-bottom {
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: -50px;
+    }
+
+}
+
+@media (max-width: 1023px) {
+    .item-border {
+        border: 1px solid {{ section.sandwich_border_color }}; /* Equivalent to border-gray-100 in Tailwind */
+    }
+    .bg-list-hover:hover {
+        background-color: {{ section.sandwich_border_color }}; /* Equivalent to bg-gray-100 in Tailwind */
+    }
+    .change-ring-color {
+        box-shadow: 0 0 0 2px {{ section.sandwich_border_color }};
+    }
+    .bg-header-small{
+        background-color: {{ section.bg }};
+    }
+    #navbar-default img {
+        width: 100px;
+    }
+    svg{
+        width: 20px;
+        height: 20px;
+    }
+    .back-arrow{
+        width: 20px;
+        height: 20px;
+    }
+    #close-icon-menu {
+        width: 40px;
+        height: 40px;
+    }
+    .mobile-svg{
+        width: 15px;
+        height: 15px;
+    }
+
+        @keyframes slideInFromRight {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+    }
+
+    @keyframes slideOutToRight {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+    }
+
+    .search-form-animation {
+    animation: slideInFromRight 0.5s forwards;
+    }
+
+    .search-form-animation-out {
+    animation: slideOutToRight 0.5s forwards;
+    }
+
+    #navigation {
+        transform: translateX(-100%);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    #navigation.show {
+        transform: translateX(0);
+    }
+
+    .inside-ul {
+        transform: translate3d(200%, 0, 0);
+        transition: transform 0.2s ease-in-out;
+        will-change: transform;
+    }
+
+    .inside-ul.show {
+        transform: translate3d(0,0,0);
+    }
+
+    .search-mobile-input:focus, .search-mobile-input:active {
+        outline: none;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        border-bottom: 1px solid #000;
+    }
+}
+
+@keyframes changePosition {
+    0% {
+        position: relative;
+    }
+    100% {
+        position: fixed;
+    }
+}
+.animation-search {
+    animation: changePosition 1s forwards;
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+ul li ul{
+    position: absolute;
+
+}
+
+
+ul li ul li{
+    height: 40px;
+}
+
+ul li ul li a{
+    height: 40px;
+}
+
+.bg-scroll {
+    background-color: white;
+}
+
+header {
+    transition: background-color 0.5s ease-in-out;
+}
+
+.scrolled {
+    background-color: {{ section.bg }};
+    opacity: 0.98;
+}
+
+.search-bg {
+    background-color: {{ section.bg }};
+}
+
+.child-bg {
+    background-color: {{ section.bg }};
+    
+}
+
+.bg-picker {
+background-color: {{ section.bg }};
+}
+
+.transition-nav {
+    transition: background-color 0.5s ease-in-out;
+}
+
+.center-div {
+    margin: 0px auto;
+    display: table;
+}
+
+.ml-auto-i {
+    margin-left: auto !important;
+}
+
+.mc-auto-i {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+#search-form button:hover svg {
+    transform: scale(1.2);
+}
+
+
+
+#search-form a:hover svg {
+    transform: scale(1.2);
+}
+
+.no-transition {
+  transition: none !important; /* Use !important to override other transition rules */
+}
+
+#currencySelector {
+    margin-top: 20px !important;
+    display: block;
+    font-size: 16px;
+    font-weight: semibold;
+    color: #444;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    width: auto;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml,%3Csvg%20fill%3D%22%23000000%22%20viewBox%3D%220%200%2024%2024%22%20id%3D%22down-2%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20class%3D%22justify-end%20%22%20style%3D%22width%3A%2040px%20!important%3B%20height%3A%2040px%20!important%3B%22%3E%3Cg%20id%3D%22SVGRepo_bgCarrier%22%20stroke-width%3D%220%22%3E%3C%2Fg%3E%3Cg%20id%3D%22SVGRepo_tracerCarrier%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C%2Fg%3E%3Cg%20id%3D%22SVGRepo_iconCarrier%22%3E%3Cpolyline%20id%3D%22primary%22%20points%3D%223%206%2012%2018%2021%206%22%20style%3D%22fill%3A%20none%3B%20stroke%3A%20%23000000%3B%20stroke-linecap%3A%20round%3B%20stroke-linejoin%3A%20round%3B%20stroke-width%3A%201.5%3B%22%3E%3C%2Fpolyline%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right .5em top 50%, 0 0;
+    background-size: .65em auto, 100%;
+}
+</style>
+
+{% javascript %}
+
+
+let scrollListener = null;
+
+scrollListener = () => {
+    if (window.innerWidth < 1024) {
+        return;
+    }
+
+    const head = document.querySelector('#navbar-default');
+
+    if (window.scrollY > 100){
+        head.classList.add('scrolled');
+        head.classList.remove('bg-navbar-initial');
+    } else { 
+        head.classList.add('bg-navbar-initial');
+        head.classList.remove('scrolled');
+    }
+};
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    const head = document.querySelector('#navbar-default');
+
+    if (window.location.pathname === "/") {
+        document.addEventListener('scroll', scrollListener);
+    } else {
+        head.classList.add('scrolled');
+        head.classList.remove('bg-navbar-initial');
+        if (scrollListener) {
+            document.removeEventListener('scroll', scrollListener);
+        }
+    }
+});
+
+const searchButton = document.querySelector('#search-button');
+const searchForm = document.querySelector('#search-form');
+const searchClose = document.querySelector('#search-close');
+const searchCloseMobile = document.querySelector('#close-search-mobile');
+const searchOpenMobile = document.querySelector('#open-search-mobile');
+
+if (searchButton && searchForm) {
+    searchButton.addEventListener('click', () => { 
+        if (searchForm.classList.contains('hidden')) {
+            searchForm.classList.remove('hidden');
+            searchForm.classList.add('search-form-animation');
+            searchForm.classList.remove('search-form-animation-out');
+            searchCloseMobile.classList.toggle('hidden');
+            searchOpenMobile.classList.toggle('hidden')
+        } else {
+            searchForm.classList.add('search-form-animation-out');
+            searchForm.classList.remove('search-form-animation');
+            searchCloseMobile.classList.toggle('hidden');
+            searchOpenMobile.classList.toggle('hidden');
+            searchForm.classList.add('hidden');
+        }
+        searchForm.classList.add('static'); 
+    });
+}
+
+if (searchClose && searchForm) {
+    searchClose.addEventListener('click', () => { 
+        if (!searchForm.classList.contains('hidden')) {
+            searchForm.classList.add('search-form-animation-out');
+            setTimeout(() => {
+                searchForm.classList.add('hidden');
+            }, 500);
+        } else {
+            searchForm.classList.remove('hidden');
+            searchForm.classList.add('search-form-animation');
+            searchForm.classList.remove('search-form-animation-out');
+        }
+        searchForm.classList.remove('static');
+    });
+}
+
+document.getElementById('hamburger-menu').addEventListener('click', function() {
+    var body = document.body;
+    var navigation = document.getElementById('navigation');
+    navigation.classList.toggle('show');
+    document.getElementById('hamburger-icon').classList.toggle('hidden');
+    document.getElementById('close-icon-menu').classList.toggle('hidden');
+    document.getElementById('hamburger-menu').classList.toggle('pl-10');
+    document.getElementById('hamburger-menu').classList.toggle('pl-4');
+    var insideUls = document.querySelectorAll('.inside-ul');
+    insideUls.forEach(function(insideUl) {
+        if (insideUl.classList.contains('show') == true){
+            insideUl.classList.add('no-transition');
+            insideUl.classList.remove('show');
+            void insideUl.offsetWidth;
+            insideUl.classList.remove('no-transition');
+        }
+    });
+});
+
+document.querySelectorAll('summary').forEach(function(summary) { 
+    summary.addEventListener('click', function() { 
+        var nextElement = this.nextElementSibling; 
+        if (nextElement && nextElement.tagName.toLowerCase() === 'ul') {
+             nextElement.classList.toggle('show'); 
+        }
+    }); 
+});
+
+document.querySelectorAll('.go-back').forEach(function(summary) {
+    summary.addEventListener('click', function(event) { 
+        event.stopPropagation(); 
+        var parentElement1 = this.parentElement; 
+        var parentElement2 = parentElement1.parentElement; 
+        if (parentElement2 && parentElement2.tagName.toLowerCase() === 'ul') {
+            parentElement2.classList.toggle('show');
+        } 
+    }); 
+});
+
+
+
+
+class LocalizationForm extends HTMLElement {
+  constructor() {
+    super();
+    this.elements = {
+      input: this.querySelector('input[name="language_code"], input[name="country_code"]'),
+      button: this.querySelector('button'),
+      panel: this.querySelector('ul'),
+    };
+    this.elements.button.addEventListener('click', this.openSelector.bind(this));
+    this.elements.button.addEventListener('focusout', this.closeSelector.bind(this));
+    this.addEventListener('keyup', this.onContainerKeyUp.bind(this));
+
+    this.querySelectorAll('a').forEach(item => item.addEventListener('click', this.onItemClick.bind(this)));
+  }
+
+  hidePanel() {
+    this.elements.button.setAttribute('aria-expanded', 'false');
+    this.elements.panel.setAttribute('hidden', true);
+  }
+
+  onContainerKeyUp(event) {
+    if (event.code.toUpperCase() !== 'ESCAPE') return;
+
+    this.hidePanel();
+    this.elements.button.focus();
+  }
+
+  onItemClick(event) {
+    event.preventDefault();
+    const form = this.querySelector('form');
+    this.elements.input.value = event.currentTarget.dataset.value;
+    if (form) form.submit();
+  }
+
+  openSelector() {
+    this.elements.button.focus();
+    this.elements.panel.toggleAttribute('hidden');
+    this.elements.button.setAttribute('aria-expanded', (this.elements.button.getAttribute('aria-expanded') === 'false').toString());
+  }
+
+  closeSelector(event) {
+    const shouldClose = event.relatedTarget && event.relatedTarget.nodeName === 'BUTTON';
+    if (event.relatedTarget === null || shouldClose) {
+      this.hidePanel();
+    }
+  }
+}
+customElements.define('localization-form', LocalizationForm);
+{% endjavascript %}
+

@@ -1,0 +1,181 @@
+{% schema %}
+{
+    "name": "Featured collection",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading Text",
+            "default": "Featured Collection"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading Text",
+            "default": "Discover our latest products"
+        },
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+        },
+        {
+            "type": "header",
+            "content": "Product Tags"
+        },
+        {
+            "type": "checkbox",
+            "id": "tag",
+            "label": "Hide Percentage Sale",
+            "default": false
+        }
+    ]
+}
+{% endschema %}
+
+
+
+{% assign product_count = section.settings.collection.products | size | at_most: 5 %}
+{% assign product_multiplier = product_count | times: 340 %}
+{% assign width = product_multiplier | plus: 420 %}
+
+<div class=" overflow-auto lg:overflow-hidden lg:px-10 lg:border-y-[1px] lg:border-y-gray-200">
+  <div class="flex flex-row align-middle justify-center h-[370px] lg:h-auto lg:w-full w-[{{ width }}px]">
+    <div class="w-[180px] flex flex-col justify-center align-middle ml-5 lg:mx-10 lg:w-auto py-5">
+      <div class="scroll-reveal">
+        <h2 class="font-bold text-lg lg:text-3xl whitespace-nowrap">{{section.settings.heading}} </h2>
+        <h3 class="text-xs lg:text-lg">{{section.settings.subheading}}</h3>
+        <div class="hidden lg:flex lg:flex-row lg:gap-4 lg:mt-2">
+          <button id="cp-scroll-left"><! cp = collection-products !>
+            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z" fill="#000000"></path> </g></svg>
+          </button>
+          <button id="cp-scroll-right">
+          <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z" fill="#000000"></path> </g></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="w-full h-full py-5 flex align-middle lg:h-auto overflow-x-auto">
+    <div id="collection-scrollable" class="w-full h-full flex flex-row self-center overflow-auto scrollbar-hide">
+    {% for product in section.settings.collection.products limit:5 %}
+    <div class="flex flex-row items-center justify-center">
+        <div class="relative shadow-lg mx-5 aspect-square w-[300px] lg:w-[400px] lg:mx-10">
+            <a href="{{ product.url | url }}" class="product">
+            {% if product.images.size > 1 %}
+            <img class="slide-down hover-image hidden aspect-square object-cover h-[300px] lg:h-[400px]" src="{{product.images[1] | image_url: width: 400}}"/>
+            {% endif %}
+            <img class="{% if product.images.size > 1 %} trigger-hover {% endif %} aspect-square object-cover h-[300px] lg:h-[400px]" src="{{product.featured_image | image_url: width: 400}}" /> 
+            <h2 class="hover-upscale shadow-text-product shadow-text-product absolute bottom-6 left-3 drop-shadow-2xl text-white lg:text-xl lg:bottom-10 lg:left-6"> {{ product.title }} </h2>
+            <div class="flex flex-row absolute bottom-2 left-3 align-middle lg:bottom-4 lg:left-6">
+                <h3 class="shadow-text-product drop-shadow-lg text-white text-xs font-light lg:text-base"> {{ product.price | money }} 
+                </h3> 
+                <h3 class="shadow-text-product drop-shadow-lg text-white text-xs font-light line-through opacity-50 ml-1 lg:text-base"> {{ product.compare_at_price_max | money }} </h3>
+                <svg class="shadow-text-product self-center ml-1 w-2 h-2 lg:w-4 lg:h-4" fill="#fff" viewBox="0 0 24 24" id="right-arrow" xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M3,12H21m-3,3,3-3L18,9" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+            </div>
+            <div class="absolute top-3 right-3 flex flex-col gap-2">
+            {% if section.settings.tag == false %}
+              <p class="text-xs text-white font-normal rounded-md bg-[#43766C] px-2 py-1 w-max self-end">-{{ product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max | round }}%</p>
+            {% else %}    
+              <p class="text-xs text-white font-normal tracking-wider rounded-md bg-[#43766C] px-2 py-1 w-max self-end">SALE</p>
+            {% endif %}
+            {% if product.tags contains 'new' %}
+                <p class="text-xs text-white font-normal tracking-wider rounded-md bg-[#e1ad01] px-2 py-1 w-max self-end">NEW</p>
+            {% endif %}
+            {% if product.tags contains 'bestseller' %}
+                <p class="text-xs text-white font-normal tracking-wider rounded-md bg-[#0D1717] px-2 py-1 w-max self-end">BESTSELLER</p>
+            {% endif %}
+            {% if product.available == false %}
+                <p class="text-xs text-white font-normal tracking-wider rounded-md bg-[#0D1717] px-2 py-1 w-max self-end">SOLD OUT</p>
+            {% endif %}
+            </div>
+            </a>
+        </div>
+    </div>
+
+    {% endfor %}
+    <div class="w-[180px] flex flex-col justify-center align-middle mx-5 lg:w-[220px]">
+        <a href="{{ section.settings.collection.url | url}}" class="h-full w-full flex flex-col justify-center">
+        <h2 class="font-bold text-lg lg:text-2xl whitespace-nowrap">View all products</h2> 
+        <div class="flex flex-row align-middle">
+            <h3 class="text-xs font-normal lg:text-lg">see more</h3>
+            <svg class="shadow-text-product self-center ml-1 w-2 h-2 lg:w-4 lg:h-4" fill="#000" viewBox="0 0 24 24" id="right-arrow" xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M3,12H21m-3,3,3-3L18,9" style="fill: none; stroke: #000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+        </div>
+        </a>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+
+.shadow-text-product {
+    text-shadow: 0.1px 0.1px 1px #ffffff;
+}
+
+.relative:hover .hover-image {
+    display: block;
+}
+
+.relative:hover .trigger-hover {
+    display: none;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-down {
+    animation: slideDown 0.5s forwards;
+}
+
+.hover-upscale {
+    transition: all 0.5s;
+    transform-origin: left center;
+}
+
+.product:hover .hover-upscale {
+    transform: scale(1.15); 
+}
+
+#collection-scrollable::-webkit-scrollbar {
+  display: none !important;
+}
+
+#collection-scrollable {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+{% endstylesheet %}
+
+{% javascript %}
+
+$(document).ready(function() {
+    $('#cp-scroll-right').click(function() {
+        $('#collection-scrollable').animate({
+            scrollLeft: "+=800px"
+        }, "slow");
+    });
+
+    $('#cp-scroll-left').click(function() {
+        $('#collection-scrollable').animate({
+            scrollLeft: "-=800px"
+        }, "slow");
+    });
+}); 
+
+{% endjavascript %}
+
+
+{% comment %}
+{% assign product = all_products[section.settings.product] %}
+
+
+{% endcomment %}

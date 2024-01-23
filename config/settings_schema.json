@@ -1,0 +1,105 @@
+[
+    {
+        "name": "Colors",
+        "settings": [
+            {
+                "type": "color",
+                "id": "bg",
+                "label": "Background color",
+                "default": "#fff"
+            },
+            {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text color",
+                "default": "#000"
+            }
+        ]
+    },
+    {
+        "name": "Fonts",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Default Font Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "use_default_font",
+                "label": "Use default font (Outfit)",
+                "info": "if you want to use a custom font, uncheck this option and select a different font below",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Custom Title Font",
+                "info": "make sure to uncheck the default font option above to change the title font"
+            },
+            {
+                "type": "font_picker",
+                "id": "font_title",
+                "label": "Font Title",
+                "default": "helvetica_n4"
+            },
+            {
+                "type": "header",
+                "content": "Custom Text Font",
+                "info": "You can change this font without unchecking the default title font option above!"
+            },
+            {
+                "type": "font_picker",
+                "id": "font_text",
+                "label": "Font Text",
+                "default": "poppins_n4"
+            },
+            {
+                "type": "header",
+                "content": "Default Font Sizes",
+                "info": "You can change the default font size (only applicable on certain parts)"
+            },
+            {
+                "type": "range",
+                "id": "h1_size",
+                "label": "H1 Size",
+                "min": 16,
+                "max": 100,
+                "step": 1,
+                "default": 64
+            }
+        ]
+    },
+    {
+        "name": "Social Media",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Social Media Links"
+            },
+            {
+                "type": "text",
+                "id": "instagram_link",
+                "label": "Instagram Links"
+            },
+            {
+                "type": "text",
+                "id": "facebook_link",
+                "label": "Facebook Links"
+            },
+            {
+                "type": "text",
+                "id": "twitter_link",
+                "label": "Twitter Links"
+            },
+            {
+                "type": "text",
+                "id": "tiktok_link",
+                "label": "Tiktok Links"
+            },
+            {
+                "type": "text",
+                "id": "pinterest_link",
+                "label": "Pinterest Links"
+            }
+        ]
+    }
+]

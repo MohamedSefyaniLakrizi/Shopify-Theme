@@ -1,0 +1,404 @@
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Content"
+    },    
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "New Collection"
+    },
+    {
+      "type": "text",
+      "id": "hero_content",
+      "label": "Hero Content",
+      "default": "Discover our latest products"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Automatic Slide"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_slide",
+      "label": "Enable automatic slide",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "time_before_start",
+      "label": "Time before start",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 5,
+      "unit": "sec"
+    },
+    {
+      "type": "range",
+      "id": "slide_interval",
+      "label": "Slide interval",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "default": 15,
+      "unit": "sec"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_loading_progress",
+      "label": "Show loading progress",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero_content",
+      "name": "Hero Content",
+        "settings": [
+        {
+          "type": "image_picker",
+          "id": "hero_image",
+          "label": "Hero Image"
+        },
+        {
+          "type": "text",
+          "id": "hero_title",
+          "label": "Hero Title",
+          "default": "New Collection"
+        },
+        {
+          "type": "text",
+          "id": "hero_content",
+          "label": "Hero Content",
+          "default": "Discover our latest products"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "default": "/collections/all"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% assign num_blocks = section.blocks | size %}
+
+<div class="relative flex flex-row justify-start hero_content lg:shadow-2xl w-[{{ num_blocks | plus: 1 }}00vw] ">
+  <div class="slider_tabs">
+    {% if num_blocks > 0 %}
+    <input type="radio" name="slider" id="slider1" class="invisible hidden">
+    {% for block in section.blocks %}
+      <input type="radio" name="slider" id="slider{{ forloop.index | plus: 1}}" class="invisible hidden">
+    {% endfor %}
+    {% endif %}
+    <div class="absolute items-center justify-center justify-items-center bottom-[10%] gap-3 w-screen h-5 flex labels z-10 lg:bottom-[5%] lg:gap-5">
+    {% if num_blocks > 0 %}
+      <label for="slider1" name="slider" class="w-5 h-5 bg-amber-800 rounded-full bg-opacity-80 ease-in-out"></label>
+      {% for block in section.blocks %}
+        <label for="slider{{ forloop.index | plus: 1}}" name="slider" class="w-5 h-5 bg-amber-800 rounded-full bg-opacity-80 ease-in-out"></label>
+      {% endfor %}
+    {% endif %}
+    </div>
+    {% if section.settings.show_loading_progress %}
+    {% if num_blocks > 0 %}
+    <div class="hidden lg:absolute lg:flex lg:bottom-5 lg:left-[95vw] lg:z-10 lg:items-center lg:align-middle">
+      <svg id="loading-svg" xmIng-"http: //www.w.org/2000/svg" version="1.1" width="50px" height="50px">
+      <circle id="loading-circle" cx="25" cy="25" r= "20" stroke-linecap-"round"/></svg>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% if num_blocks > 0 %}
+    <div class="absolute w-screen flex justify-between top-[50%] z-10">
+      <div class="relative ml-5" id="left-arrow-carousel">
+        <svg class="slide-arrows" stroke="#ffffff" width="55px" height="55px" border="#000" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M21,12H3M6,9,3,12l3,3" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+      </div>
+      <div class="mr-5" id="right-arrow-carousel">
+        <svg class="slide-arrows" stroke="#ffffff" width="55px" height="55px" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M3,12H21m-3,3,3-3L18,9" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg>
+      </div>
+    </div>
+    {% endif %}
+    <div id="carousel" class="slides w-[{{ num_blocks | plus: 1 }}00vw] flex flex-row justify-center">
+      <div class="flex flex-row justify-center">
+        <img class="left-0 w-screen aspect-auto h-[40vh] top-[12vh] lg:w-screen lg:h-[100vh] lg:object-cover" src="{{section.settings.hero_image| image_url}}" />
+        <div class="absolute z-10 self-center">
+          <div class="items-center align-middle">
+            <div class="flex flex-col justify-center items-center mb-7 lg:mb-0">
+              <h1 class="w-min text-5xl font-bold text-white text-center hero-shadow lg:text-9xl">{{section.settings.hero_title}}</h1>
+              <p class="text-center text-white hero-shadow pt-2 lg:text-lg">{{section.settings.hero_content}}</p>
+              <div class="bg-amber-800 bg-opacity-80 rounded-[10px] shadow justify-center flex items-center align-middle mt-2 h-10 w-28 lg:mt-8 lg:h-14 lg:w-36 lg:shadow-lg">
+                <a href="{{section.settings.button_link}}" class="h-full w-full flex flex-row justify-center items-center text-white text-sm font-medium tracking-wider lg:text-base lg:font-normal">Shop Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% for block in section.blocks %}
+      <div class="flex flex-row justify-center">
+        <img class="left-0 w-screen aspect-auto h-[40vh] top-[12vh] lg:w-screen lg:h-[100vh] lg:object-cover" src="{{block.settings.hero_image| image_url}}" />
+        <div class="absolute z-10 self-center">
+          <div class="items-center align-middle">
+            <div class="flex flex-col justify-center items-center mb-7 lg:mb-0">
+              <h1 class="w-min text-5xl font-bold text-white text-center hero-shadow lg:text-9xl">{{block.settings.hero_title}}</h1>
+              <p class="text-center text-white hero-shadow pt-2 lg:text-lg">{{block.settings.hero_content}}</p>
+              <div class="bg-amber-800 bg-opacity-80 rounded-[10px] shadow justify-center flex items-center align-middle mt-2 h-10 w-28 lg:mt-8 lg:h-14 lg:w-36 lg:shadow-lg">
+                <a href="{{section.settings.button_link}}" class="h-full w-full flex flex-row justify-center items-center text-white text-sm font-medium tracking-wider lg:text-base lg:font-normal">Shop Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+
+@media (min-width: 1024px) {
+  .slide-arrows{
+    width: 30px !important;
+    height: 30px !important;
+    opacity: 0.8;
+  }
+}
+
+h1 {
+  font-size: 4vh; /* Adjust as needed */
+  min-font-size: 16px; /* Adjust as needed */
+  max-font-size: 36px; /* Adjust as needed */
+}
+
+.slide-arrows {
+  transition: all 0.3s ease-in-out;
+}
+
+.slide-arrows:active {
+  transform: scale(1.2); /* Adjust scale as needed */
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+#carousel {
+  overflow-x: scroll;
+}
+
+#carousel::-webkit-scrollbar {
+  display: none;
+}
+
+#carousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hero_content {
+  transition: all 0.5s ease-in-out;
+  position: relative;
+}
+
+.hero-shadow {
+    text-shadow: #000 2px 0 15px;
+}
+ 
+.slider_tabs input:nth-child(1):checked ~ .labels label:nth-child(1),
+.slider_tabs input:nth-child(2):checked ~ .labels label:nth-child(2),
+.slider_tabs input:nth-child(3):checked ~ .labels label:nth-child(3),
+.slider_tabs input:nth-child(4):checked ~ .labels label:nth-child(4),
+.slider_tabs input:nth-child(5):checked ~ .labels label:nth-child(5) {
+    background-color: #4d280a;
+    width: 40px;
+}
+
+.slider {
+  overflow: hidden;
+  width: 100vw;
+}
+
+.slides {
+  transition: transform 0.5s ease-in-out;
+}
+
+label {
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+#root, #__next {
+    isolation: isolate;
+}
+
+#carousel {
+    transition-timing-function: ease-in-out;
+}
+
+@keyframes fill {
+    to { stroke-dashoffset: 0; }
+}
+
+.loader .path {
+    stroke: #000000; /* Color for the loader */
+    stroke-width: 5px;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 300;
+    animation: fill {{ section.settings.slide_interval }}s forwards;
+}
+
+#loading-circle {
+  fill: none;
+  stroke: white;
+  stroke-width: 10px;
+  stroke-dasharray: 125;
+  stroke-dashoffset: 125;
+  opacity: 0.3;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+{% endstylesheet %}
+
+
+<script>
+    var autoSlide = '{{ section.settings.auto_slide }}';
+    var slideInterval = '{{ section.settings.slide_interval }}';
+    var timeBeforeStart = '{{ section.settings.time_before_start }}';
+    var show_loading_progress = '{{ section.settings.show_loading_progress }}';
+</script>
+
+{% javascript %}
+
+$(document).ready(function() {
+    var $carousel = $('#carousel');
+    var $slides = $carousel.children();
+    var totalSlides = $slides.length;
+    var currentIndex = 0;
+    var startX, moveX, distX;
+    var isTransitioning = false;
+
+
+
+    function checkSlider() {
+        var transformValue = $carousel.css('transform');
+        var translateX = parseInt(transformValue.split(',')[4].trim());
+        var vw = $(window).width();
+
+        for (var i = 0; i < totalSlides; i++) {
+            if (translateX === -i * vw) {
+                $('#slider' + (i + 1)).prop('checked', true);
+            }
+        }
+    }
+
+    window.moveRight = function() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        $carousel.css({ 'transform': 'translateX(' + (-currentIndex * 100) + 'vw)' });
+    }
+
+    $('#right-arrow-carousel').click(moveRight);
+
+    $('#left-arrow-carousel').click(function() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        $carousel.css({ 'transform': 'translateX(' + (-currentIndex * 100) + 'vw)' });
+    });
+
+    $carousel.on('transitionend', function() {
+        isTransitioning = false;
+        checkSlider();
+    });
+
+    $carousel.on('touchstart', function(e) {
+        startX = e.originalEvent.touches[0].pageX;
+    });
+
+    $carousel.on('touchmove', function(e) {
+        if (isTransitioning) return;
+        moveX = e.originalEvent.touches[0].pageX;
+        distX = startX - moveX;
+        $carousel.css({ 'transform': 'translateX(' + (-currentIndex * 100 + distX / $(window).width() * 100) + 'vw)' });
+    });
+
+    $carousel.on('touchend', function() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        if (Math.abs(distX) > 50) { // Threshold for swipe
+            if (distX > 0) {
+                currentIndex = Math.round((currentIndex + 1) % totalSlides);
+            } else {
+                currentIndex = Math.round((currentIndex - 1 + totalSlides) % totalSlides);
+            }
+        }
+        $carousel.css({ 'transform': 'translateX(' + (-currentIndex * 100) + 'vw)' });
+    });
+
+    $('#slider1, #slider2, #slider3, #slider4, #slider5, #slider6').change(function() {
+        var $carousel = $('.slides');
+        var sliderNumber = parseInt(this.id.replace('slider', ''));
+        $carousel.css({ 'transform': 'translateX(' + (-(sliderNumber - 1) * 100) + 'vw)' });
+    });
+
+
+
+function startAutoSlide() {
+    setTimeout(function() {
+        window.moveRight();
+        startAutoSlide();
+        if (show_loading_progress === 'true') {
+            startAnimation();
+        }
+    },  slideInterval * 1000);
+} 
+
+setTimeout(function() {
+  if (autoSlide === 'true') {
+      startAutoSlide();
+      if (show_loading_progress === 'true') {
+          startAnimation();
+      }
+  }
+}, timeBeforeStart * 1000);
+
+if (show_loading_progress === 'true') {
+  function startAnimation() {
+    var $circle = $('#loading-circle'); // Adjusted selector
+
+    var totalLength = 125;
+    var increment = totalLength / (slideInterval * 1000 / 10); // Calculate the increment for each 10ms
+    var currentOffset = totalLength; // Start at totalLength
+    console.log(slideInterval);
+    var intervalId = setInterval(function() {
+      currentOffset -= increment; // Subtract increment
+
+      $circle.css('strokeDashoffset', currentOffset);
+      // If we've reached or exceeded the total length, clear the interval
+      if (currentOffset <= 0) { // Check if currentOffset has reached or gone below 0
+        clearInterval(intervalId);
+      }
+    }, 10);
+  }
+}
+
+
+});
+
+
+{% endjavascript %}

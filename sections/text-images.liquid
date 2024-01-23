@@ -1,0 +1,76 @@
+{% schema %}
+
+{
+    "name": "text-images",
+    "presets": [
+        {
+            "name": "Text Images"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text-image",
+            "name": "text-image",
+            "settings": [
+                {
+                    "type": "header",
+                    "content": "Text & Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "header",
+                    "content": "Button"
+                }
+                {
+                    "type": "checkbox",
+                    "id": "button",
+                    "label": "Button",
+                    "default": true
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link",
+                    "default": "/"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
+
+
+<div class="flex flex-col gap-10 lg:gap-0">
+    {% for block in section.blocks %}
+        <div class="m-3 lg:m-10 rounded-lg border-[1px] border-gray-900 overflow-hidden">
+            <div class="flex flex-col gap-2 lg:gap-0 lg:items-center {% cycle 'lg:flex-row', 'lg:flex-row-reverse' %}">
+                <div class="w-full lg:w-1/2">
+                    <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.heading }}">
+                </div>
+                <div class="w-full gap-5 p-2 lg:w-1/2 lg:mx-4">
+                    <h2 class="font-semibold text-xl mb-2 lg:font-semibold lg:mt-4 lg:mb-2">{{ block.settings.heading }}</h2>
+                    <p class="text-xs lg:text-sm leading-6">{{ block.settings.text }}</p>
+                    {% if block.settings.button %}
+                    <button class="my-2 lg:my-4">
+                        <a href="{{ block.settings.link }}" class="text-xs lg:text-sm font-light text-white bg-black px-4 py-2 rounded-lg hover:bg-gray-900">Learn More</a>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

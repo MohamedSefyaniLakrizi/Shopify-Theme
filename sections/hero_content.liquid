@@ -1,0 +1,14 @@
+<div class="flex flex-row justify-center">
+    <img class="left-0 w-screen aspect-auto h-[40vh] top-[12vh] lg:-top-[8vh] lg:relative" src="{{ block.settings.hero_image | img_url: 'master' }}" />
+        <div class="absolute z-10 self-center">
+        <div class="items-center align-middle">
+          <div class="flex flex-col justify-center items-center mb-7">
+            <h1 class="w-min text-5xl font-bold text-white text-center hero-shadow">{{ block.settings.title }}</h1>
+                <p class="text-center text-white hero-shadow pt-2">{{ block.settings.hero_content }}</p>
+                <div class="bg-amber-800 bg-opacity-80 rounded-[10px] shadow justify-center flex items-center align-middle mt-2 h-10 w-28">
+                  <a href="{{ block.settings.button_link }}" class="inline-block text-center text-white text-sm font-medium tracking-wider">Shop Now</a>
+                </div>
+          </div>
+        </div>
+        </div>
+</div>

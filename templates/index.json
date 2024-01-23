@@ -1,0 +1,25 @@
+{
+    "sections":{
+        "main": {
+            "type": "hero"
+        },
+        "product_story": {
+            "title": "Product Story",
+            "type": "product-story"
+        },
+        "featured_collection":{
+            "title": "Featured Collection",
+            "type": "collection-products"
+        },
+        "collection_list":{
+            "title": "Collection List",
+            "type": "collection-list"
+        }
+    },
+    "order": [
+        "main",
+        "featured_collection",
+        "collection_list",
+        "product_story"
+    ]  
+}

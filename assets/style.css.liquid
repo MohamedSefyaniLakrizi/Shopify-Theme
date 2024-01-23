@@ -1,0 +1,30 @@
+{{ settings.font_text | font_face}};
+
+
+{{ settings.font_title | font_face}};
+
+
+
+{% assign font_title = settings.font_title %}
+{% assign font_text = settings.font_text %}
+
+body {
+    background-color: {{ settings.bg}};
+    color: {{ settings.text_color }};
+}
+
+h1, h2, h3, h4, h5, h6, a, summary {
+    {% if settings.use_default_font %}
+        font-family: Outfit, sans-serif;
+    {% else %}
+        font-family: {{ font_title.family}}, {{ font_title.fallback_families}};
+    {% endif %}
+}
+
+p, input {
+    font-family: {{ font_text.family}}, {{ font_text.fallback_families}};
+}
+
+h1{
+    font-size: {{ settings.h1_size }}px;
+}
