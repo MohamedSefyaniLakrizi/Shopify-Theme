@@ -17,4 +17,6 @@ They all have products / collections that are displayed and can be changed in th
 
 The hero component is a flexible component that can have either a carousel of images with different titles and buttons, or just one main image. It also displays the time remaining to go to the next item.
 
-![fairstly_hero](https://github.com/MohamedSefyaniLakrizi/Shopify-Theme/assets/102101395/0e9a99b6-99a0-437d-84de-68d9c6511fd9)
+
+![fairstly_hero](https://github.com/MohamedSefyaniLakrizi/Shopify-Theme/assets/102101395/7d743287-67ac-4068-b2c4-c8544a40a304)
+![fairstly_hero_mobile](https://github.com/MohamedSefyaniLakrizi/Shopify-Theme/assets/102101395/e8813c0a-001a-4fca-b4c0-b2f8fdc7de0d)
